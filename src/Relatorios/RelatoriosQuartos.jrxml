@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatoriosQuartos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a34443bc-bdf0-428e-8086-bc112aae468c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     quarto.`id` AS quarto_id,
+     quarto.`descricao` AS quarto_descricao,
+     quarto.`estado` AS quarto_estado,
+     quarto.`precoDiario` AS quarto_precoDiario,
+     quarto.`tipoQuarto` AS quarto_tipoQuarto
+FROM
+     `quarto` quarto]]>
+	</queryString>
+	<field name="quarto_id" class="java.lang.Integer"/>
+	<field name="quarto_descricao" class="java.lang.String"/>
+	<field name="quarto_estado" class="java.lang.String"/>
+	<field name="quarto_precoDiario" class="java.lang.Double"/>
+	<field name="quarto_tipoQuarto" class="java.lang.String"/>
+	<variable name="SOMA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{quarto_precoDiario}]]></variableExpression>
+	</variable>
+	<variable name="CONTAGEM" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{quarto_id}]]></variableExpression>
+	</variable>
+	<group name="quarto_estado">
+		<groupExpression><![CDATA[$F{quarto_estado}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<frame>
+					<reportElement mode="Opaque" x="2" y="0" width="721" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="124d3b8a-f31a-491d-ba51-505424fbbc50"/>
+				</frame>
+				<rectangle>
+					<reportElement x="725" y="3" width="77" height="24" backcolor="#666666" uuid="a5cfe441-520e-448d-8c7b-9859230669ee"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField>
+					<reportElement x="707" y="0" width="77" height="20" forecolor="#000000" uuid="94753085-baa6-4538-9924-e1a13ffcd8ca"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14" isBold="true" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SOMA}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="725" y="0" width="77" height="102" uuid="485598c3-3bdd-4a83-bdcc-aadf854209f5"/>
+				<imageExpression><![CDATA["cherry.jpg"]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" uuid="9c837eac-5f7e-443d-8532-c9eba490b51e"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="535" height="66" uuid="8ff69e21-d588-42ed-9dfa-2d9c9cb8ac28"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Sistema Gestão Hoteleira]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="535" y="37" width="172" height="29" uuid="272014e4-572d-4852-b0f8-250884a97b5a"/>
+					<textElement textAlignment="Right">
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório Quartos]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000" uuid="61db2291-6160-4273-bd7a-927faf6e5aea"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="553" y="12" width="144" height="20" forecolor="#FFFFFF" uuid="95d5dc32-a146-4ec9-8714-b7a5e470d265"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField pattern="HH.mm.ss">
+					<reportElement x="424" y="12" width="129" height="20" forecolor="#FFFFFF" uuid="d8f6a7f9-c50d-4063-9a5f-d3517ffe2491"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="82" y="0" width="117" height="18" forecolor="#000000" uuid="023eed76-6e68-41cc-8cc7-154c5bf6bef7"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="199" y="0" width="199" height="18" forecolor="#000000" uuid="b3d2cb7b-c04d-443b-bc30-7bd9f4817307"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="354" y="0" width="199" height="18" forecolor="#000000" uuid="b4634e30-d433-46de-b06b-0a61088d2c96"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Quarto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="524" y="0" width="169" height="18" forecolor="#000000" uuid="b7850a89-8754-44dc-bb90-3003423c34e7"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="2" y="0" width="65" height="18" forecolor="#000000" uuid="3f7fe171-effd-4453-8fb8-040feb0cf3db"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="fd20ef87-fe0d-4f16-8e60-4b8f99586db8"/>
+				<textField>
+					<reportElement x="82" y="0" width="115" height="18" uuid="957e1f38-1a71-4da4-9db1-ff491dba6dc0"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{quarto_estado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="199" y="0" width="157" height="18" uuid="ea1f64c9-714e-4bd3-8f89-10c5f01dbcb0"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{quarto_descricao}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="356" y="0" width="168" height="18" uuid="fc59be08-8367-4a2a-93b8-28172c1ea534"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{quarto_tipoQuarto}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="522" y="0" width="199" height="18" uuid="0cad7502-af7b-41bb-a26f-ff55155d1288"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{quarto_precoDiario}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="80" height="18" forecolor="#000000" uuid="2d4cca65-7862-484a-961e-22766ec7b37a"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{quarto_id}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="68" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="f794d247-757b-4870-9b00-b7f6dc463766"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="380" y="4" width="176" height="20" uuid="2aaf79fe-f0e6-4a20-a8da-98d063127dc2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Valor Esperado Apos Aluguer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="587" y="3" width="100" height="20" uuid="8a1db308-2d38-4f52-bb69-2e8f465dd8f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SOMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="38" width="176" height="20" uuid="f2efc5e7-5432-41cb-835c-8fe2caa54b41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Número de Quartos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="577" y="38" width="120" height="20" uuid="f95a17d2-3290-42cb-a7e6-9205dd376c6e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CONTAGEM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="cb7586e6-6f85-48af-8727-212df8a8c729"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="65bef391-d7af-4323-a958-9403e3151acc"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="e4b537b4-e6a0-4879-b7ef-d75e0696d70c"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" uuid="0992b541-84ba-486d-a3d9-1d57de34b82a"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
